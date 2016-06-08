@@ -3,6 +3,7 @@
 /**
  * @class ProtoTypeConcrete
  * @author ShiO
+ * 具体原型实现
  */
 class ProtoTypeConcrete implements ProtoType{
     private $obj;
