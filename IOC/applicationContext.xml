@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	     xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	     http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+	 <bean id="LoginAction" class="/TestStringForPHP/com/action/loginAction.php" />
+	 
+	 
+	 <bean id="UserMode" class="/TestStringForPHP/com/mode/Userclass_UserMode.php" />
+	 
+	 
+	 <bean id="UserService" class="/TestStringForPHP/com/service/UserService.php" />
+	
+
+	 <bean id="UserDao" class="/TestStringForPHP/com/dao/UserDao.php" />
+</beans>
