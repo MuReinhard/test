@@ -19,22 +19,16 @@ class SqlSearchClint {
      * @author ShiO
      */
     public function searchSqlData() {
-        try {
-            $context = new SearchSqlContext();
-            $context->setAccording($this->basisModel);
-            $context->setMessageObj(new Message());
-            $context->setConfigObj(AppConfig::getInstance());
+        $context = new SearchSqlContext();
+        $context->setAccording($this->basisModel);
+        $context->setMessageObj(new Message());
+        $context->setConfigObj(AppConfig::getInstance());
 
-            $modelSerch = new ModelSerch();
-            $sqlFileSearch = new SqlFileSearch();
+        $modelSerch = new ModelSerch();
+        $sqlFileSearch = new SqlFileSearch();
 
-            $modelSerch->setHandle($sqlFileSearch);
-            return $modelSerch->search($context);
-        } catch (SearchContextErrorException $e) {
-            echo $e->getFile();
-            echo $e->getLine();
-            echo $e->getMessage();
-        }
+        $modelSerch->setHandle($sqlFileSearch);
+        return $modelSerch->search($context);
     }
 
     /**

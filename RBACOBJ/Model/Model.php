@@ -1,5 +1,7 @@
 <?php
 namespace Model;
+use Core\Service\SearchStrategy\SqlSearchClint;
+
 /**
  * @class Model
  * @author ShiO
@@ -21,5 +23,12 @@ class Model {
      */
     public function setBuildSql($buildSql) {
         $this->buildSql = $buildSql;
+    }
+
+    public function build() {
+        $search = new SqlSearchClint();
+        $search->setBasisModel($this);
+        $context = $search->searchSqlData();
+        echo $context->getResult();
     }
 }
