@@ -10,4 +10,5 @@ abstract class IIterator {
     public abstract function del();
     public abstract function first();
     public abstract function last();
+    public abstract function all();
 }

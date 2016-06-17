@@ -15,6 +15,7 @@ class SqlFileLookers {
      * @author ShiO
      */
     public function getData() {
-        $this->fileObj->openFile(FILE::FILE_READ_MOD_OPEN);
+        return '我是sql语句';
+//        return $this->fileObj->openFile(FILE::FILE_READ_MOD_OPEN);
     }
 }

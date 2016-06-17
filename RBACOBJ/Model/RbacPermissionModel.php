@@ -8,13 +8,14 @@ use Core\Service\SearchStrategy\SqlSearchClint;
  * @date 2015年9月19日21:50:04
  */
 class RbacPermissionModel extends Model implements DataModelInterface {
+    protected $buildSql = false;
     /**
      * @author ShiO
      * @return mixed
      */
     public function build() {
-        $search = new SqlSearchClint();
-        $search->setBasisModel($this);
+//        $search = new SqlSearchClint();
+//        $search->setBasisModel($this);
     }
 }
 

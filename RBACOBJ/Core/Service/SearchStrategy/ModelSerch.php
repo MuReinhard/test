@@ -1,36 +1,37 @@
 <?php
-namespace Admin\Core\Service\SearchStrategy;
+namespace Core\Service\SearchStrategy;
 
-use Core\Db\Service\SearchStrategy\Search;
-use Model\Model;
+use Core\Service\Context\Context;
+use Exception\SearchContextErrorException;
+
 
 /**
  * @class ModelSerch
  * @author ShiO
  */
 class ModelSerch extends Search {
-    public $basisModel;
-
     /**
      * @author ShiO
-     * @param Model $model
+     * @param Context $context
+     * @return mixed
+     * @throws SearchContextErrorException
      */
-    public function setBasisModel(Model $model) {
-        $this->basisModel = $model;
-    }
-
-    /**
-     * @author ShiO
-     */
-    public function search() {
-        if ($this->basisModel->buildSql) {
-
-        } elseif(isset($this->nextSerarch)) {
-            $this->nextSerarch->search();
+    public function search(Context $context) {
+        if (!$context->getAccording()) {
+            throw new SearchContextErrorException($context->getMessageObj());
         }
-    }
-
-    public function __construct($context) {
-        parent::__construct($context);
+        $according = $context->getAccording();
+        $sql = $according->getBuildSql();
+        if ($sql) {
+            $context->setResult($sql);
+            $context->getMessageObj()->setMessage($context->getConfigObj()->findConfig('MESSAGE', '200'));
+            return $context;
+        }
+        if (isset($this->nextSerarch)) {
+            return $this->nextSerarch->search($context);
+        } else {
+            $context->getMessageObj()->setMessage($context->getConfigObj()->findConfig('MESSAGE', '300'));
+            return $context;
+        }
     }
 }

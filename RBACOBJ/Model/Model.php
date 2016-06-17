@@ -5,6 +5,21 @@ namespace Model;
  * @author ShiO
  */
 class Model {
-    protected $according;
+    protected $buildSql;
 
+    /**
+     * @author ShiO
+     * @return mixed
+     */
+    public function getBuildSql() {
+        return $this->buildSql;
+    }
+
+    /**
+     * @author ShiO
+     * @param mixed $buildSql
+     */
+    public function setBuildSql($buildSql) {
+        $this->buildSql = $buildSql;
+    }
 }

@@ -50,4 +50,8 @@ class SimpleArrIterator extends IIterator{
     public function next() {
         return next($this->data);
     }
+
+    public function all() {
+        return $this->data;
+    }
 }

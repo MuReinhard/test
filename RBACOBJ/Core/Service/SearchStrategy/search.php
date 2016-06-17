@@ -1,5 +1,6 @@
 <?php
-namespace Core\Db\Service\SearchStrategy;
+namespace Core\Service\SearchStrategy;
+use Core\Service\Context\Context;
 
 /**
  * @class SqlSerarch
@@ -16,5 +17,10 @@ abstract class Search {
         $this->nextSerarch = $serarch;
     }
 
-    abstract public function search($context);
+    /**
+     * @author ShiO
+     * @param $context
+     * @return mixed
+     */
+    abstract public function search(Context $context);
 }
