@@ -1,6 +1,8 @@
 <?php
 namespace Model;
+
 use Core\Service\SearchStrategy\SqlSearchClint;
+use RBAC\CreateBranch;
 
 /**
  * @class Model
@@ -26,9 +28,27 @@ class Model {
     }
 
     public function build() {
+        // 1.检查表是否存在
+
+        // 2.查找建表语句
         $search = new SqlSearchClint();
         $search->setBasisModel($this);
         $context = $search->searchSqlData();
-        echo $context->getResult();
+        return $context->getResult();
+    }
+
+    /**
+     * @author ShiO
+     * @param $parent
+     * @param $childArr
+     * @return array
+     */
+    public function buildRelation($parent, $childArr) {
+        $relationName = 'hi';
+        $parent = new CreateBranch($relationName, $parent);
+        foreach ($childArr as $value) {
+            $parent->combination($value);
+        }
+        return $parent->create();
     }
 }
