@@ -15,7 +15,7 @@ class UserGroupRelationModelModel extends Model implements RelationModelInf {
     /**
      * @author ShiO
      * 绑定组成员对象
-     * @param UserModelModel $userModel
+     * @param UserModel $userModel
      * @param UserModelGroupModel $userGroupModel
      * @return $this
      */

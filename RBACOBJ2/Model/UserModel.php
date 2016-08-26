@@ -8,7 +8,7 @@ use RbacModelInf\RbacUserModelInf;
  * @class UserModel
  * @author ShiO
  */
-class UserModelModel extends Model implements ModelInf, RbacUserModelInf {
+class UserModel extends Model implements ModelInf, RbacUserModelInf {
     /**
      * @author ShiO
      * UserModel constructor.

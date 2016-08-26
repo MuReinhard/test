@@ -18,7 +18,7 @@ class UserRoleRelationModelModel extends Model implements ModelInf, RelationMode
     /**
      * @author ShiO
      * 绑定组成员对象
-     * @param UserModelModel $userModel
+     * @param UserModel $userModel
      * @param RbacRoleModelInf|RoleModel $roleModel
      * @return mixed
      */
