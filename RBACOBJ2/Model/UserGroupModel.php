@@ -1,5 +1,6 @@
 <?php
 namespace Model;
+
 use ModelInf\GroupModelInf;
 use RbacModelInf\RbacRoleModelInf;
 use RbacModelInf\RbacUserModelInf;
@@ -27,7 +28,7 @@ class UserModelGroupModel extends Model implements RbacUserModelInf, GroupModelI
      * @return mixed
      */
     public function bindRole(RbacRoleModelInf $roleModel) {
-        $relation = new UserGroupRoleRelationModelModel();
+        $relation = new UserGroupRoleRelationModel();
         $relation->connect($this, $roleModel);
     }
 

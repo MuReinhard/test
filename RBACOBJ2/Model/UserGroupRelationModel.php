@@ -7,7 +7,7 @@ use RbacModelInf\RbacUserModelInf;
  * @class UserGroupRelationModel
  * @author ShiO
  */
-class UserGroupRelationModelModel extends Model implements RelationModelInf {
+class UserGroupRelationModel extends Model implements RelationModelInf {
     public $u_u_g_relation_id;
     public $user_id;
     public $user_group_id;

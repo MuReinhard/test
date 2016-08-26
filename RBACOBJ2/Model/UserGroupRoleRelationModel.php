@@ -7,7 +7,7 @@ use ModelInf\RelationModelInf;
  * @class RoleGroupRelationModel
  * @author ShiO
  */
-class UserGroupRoleRelationModelModel extends Model implements ModelInf,RelationModelInf {
+class UserGroupRoleRelationModel extends Model implements ModelInf,RelationModelInf {
     public $u_g_r_relation_id;
     public $user_group_id;
     public $role_id;
