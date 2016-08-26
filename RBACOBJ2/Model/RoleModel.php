@@ -1,38 +1,26 @@
 <?php
 namespace Model;
+use ModelInf\GroupModelInf;
+use ModelInf\ModelInf;
+use RbacModelInf\RbacPermissionModelInf;
+use RbacModelInf\RbacRoleModelInf;
+use RbacModelInf\RbacUserModelInf;
+
 /**
  * @class RoleModel
  * @author ShiO
  */
-class RbacRoleModel extends Model implements RoleModelInf {
-
+class RoleModel extends Model implements ModelInf, RbacRoleModelInf {
     /**
      * @author ShiO
-     * 得到所有权限
-     * @return mixed
+     * RoleModel constructor.
      */
-    public function getAllPermission() {
-        // TODO: Implement getAllPermission() method.
+    public function __construct() {
+        parent::__construct();
     }
 
-    /**
-     * @author ShiO
-     * 得到角色下所有用户
-     * @return mixed
-     */
-    public function getAllUser() {
-        // TODO: Implement getAllUser() method.
-    }
-
-    /**
-     * @author ShiO
-     * 保存权限(数据库操作)
-     * @param $permission
-     * @return mixed
-     */
-    public function savePermission($permission) {
-        // TODO: Implement savePermission() method.
-    }
+    public $role_id;
+    public $role_name;
 
     /**
      * @author ShiO
@@ -40,17 +28,67 @@ class RbacRoleModel extends Model implements RoleModelInf {
      * @param $permission
      * @return mixed
      */
-    public function bindPermission($permission) {
-        // TODO: Implement bindPermission() method.
+    public function bindPermission(RbacPermissionModelInf $permission) {
+        if ($permission instanceof GroupModelInf) {
+            // 权限组model
+            $permission->bindRole($this);
+        } else {
+            // 权限model
+            $permission->bindRole($this);
+        }
     }
 
     /**
      * @author ShiO
-     * 取消绑定权限
-     * @param $permission
+     * @param RbacUserModelInf $model
      * @return mixed
      */
-    public function unBindPermission($permission) {
-        // TODO: Implement unBindPermission() method.
+    public function bindUserTarget(RbacUserModelInf $model) {
+        if ($model instanceof GroupModelInf) {
+            // 用户组model
+            $model->bindRole($this);
+        } else {
+            // 用户model
+            $model->bindRole($this);
+        }
+    }
+
+    /**
+     * @author ShiO
+     * @return mixed
+     */
+    public function getPk() {
+        return $this->role_id;
+    }
+
+    /**
+     * @author ShiO
+     * @return $this
+     */
+    public function addData() {
+        $table = array(
+            'role' => 'role',
+        );
+        $data = array(
+            'role_name' => $this->role_name,
+        );
+        $id = $this->table($table)->data($data)->add();
+        $this->setPk('role_id', $id);
+        return $this;
+    }
+
+    /**
+     * @author ShiO
+     * @param $id
+     * @return $this
+     */
+    public function findData($id) {
+        $table = array(
+            'role' => 'role',
+        );
+        $where = 'role_id' . '=' . $id;
+        $data = $this->table($table)->field()->where($where)->select();
+        $this->modelBean($data);
+        return $this;
     }
 }

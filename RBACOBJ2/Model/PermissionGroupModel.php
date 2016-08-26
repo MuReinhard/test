@@ -1,24 +1,17 @@
 <?php
 namespace Model;
 use ModelInf\GroupModelInf;
+use RbacModelInf\RbacPermissionModelInf;
 use RbacModelInf\RbacRoleModelInf;
-use RbacModelInf\RbacUserModelInf;
 
 /**
- * @class UserGroupModel
+ * @class PermissionGroupModel
  * @author ShiO
  */
-class UserModelGroupModel extends Model implements RbacUserModelInf, GroupModelInf {
-    public $user_group_id;
-    public $user_group_name;
+class RbacPermissionGroupModel extends Model implements RbacPermissionModelInf, GroupModelInf {
+    public $permission_group_id;
+    public $permission_group_name;
 
-    /**
-     * @author ShiO
-     * UserModel constructor.
-     */
-    public function __construct() {
-        parent::__construct();
-    }
 
     /**
      * @author ShiO
@@ -27,16 +20,15 @@ class UserModelGroupModel extends Model implements RbacUserModelInf, GroupModelI
      * @return mixed
      */
     public function bindRole(RbacRoleModelInf $roleModel) {
-        $relation = new UserGroupRoleRelationModelModel();
+        $relation = new PermisionGroupRoleRelationModelModel();
         $relation->connect($this, $roleModel);
     }
 
     /**
      * @author ShiO
-     * @return mixed
      */
     public function getPk() {
-        return $this->user_group_id;
+        return $this->permission_group_id;
     }
 
     /**
@@ -45,13 +37,13 @@ class UserModelGroupModel extends Model implements RbacUserModelInf, GroupModelI
      */
     public function addData() {
         $table = array(
-            'user_group' => 'user_group',
+            'permission_group' => 'permission_group',
         );
         $data = array(
-            'user_group_name' => $this->user_group_name,
+            'permission_group_name' => $this->permission_group_name,
         );
         $id = $this->table($table)->data($data)->add();
-        $this->setPk('user_group_id', $id);
+        $this->setPk('permission_group_id', $id);
         return $this;
     }
 }
