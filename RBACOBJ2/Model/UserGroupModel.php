@@ -30,6 +30,7 @@ class UserModelGroupModel extends Model implements RbacUserModelInf, GroupModelI
     public function bindRole(RbacRoleModelInf $roleModel) {
         $relation = new UserGroupRoleRelationModel();
         $relation->connect($this, $roleModel);
+        $relation->addData();
     }
 
     /**

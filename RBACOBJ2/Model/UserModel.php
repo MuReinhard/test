@@ -29,6 +29,7 @@ class UserModel extends Model implements ModelInf, RbacUserModelInf {
     public function bindRole(RbacRoleModelInf $roleModel) {
         $relationModel = new UserRoleRelationModelModel();
         $relationModel->connect($this, $roleModel);
+        $relationModel->addData();
     }
 
     /**

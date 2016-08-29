@@ -20,8 +20,9 @@ class RbacPermissionGroupModel extends Model implements RbacPermissionModelInf, 
      * @return mixed
      */
     public function bindRole(RbacRoleModelInf $roleModel) {
-        $relation = new PermisionGroupRoleRelationModelModel();
+        $relation = new PermisionGroupRoleRelationModel();
         $relation->connect($this, $roleModel);
+        $relation->addData();
     }
 
     /**

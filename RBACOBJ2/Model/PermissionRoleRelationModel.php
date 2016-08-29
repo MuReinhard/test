@@ -1,5 +1,6 @@
 <?php
 namespace Model;
+
 use ModelInf\RelationModelInf;
 use RbacModelInf\RbacPermissionModelInf;
 use RbacModelInf\RbacRoleModelInf;
@@ -8,10 +9,14 @@ use RbacModelInf\RbacRoleModelInf;
  * @class RbacRolePermissionModel
  * @author ShiO
  */
-class PermissionRoleRelationModelModel extends Model implements RelationModelInf {
+class PermissionRoleRelationModel extends Model implements RelationModelInf {
     public $p_r_relation_id;
     public $permission_id;
     public $role_id;
+
+    public $psermissionModels;
+    public $roleModels;
+
 
     /**
      * @author ShiO
@@ -24,7 +29,7 @@ class PermissionRoleRelationModelModel extends Model implements RelationModelInf
         if ($permissionModel instanceof RbacPermissionModelInf && $roleModel instanceof RbacRoleModelInf) {
             $this->permission_id = $permissionModel->getPk();
             $this->role_id = $roleModel->getPk();
-            $this->add();
+            return $this;
         }
     }
 
@@ -40,7 +45,7 @@ class PermissionRoleRelationModelModel extends Model implements RelationModelInf
      * @author ShiO
      * @return $this
      */
-    public function add() {
+    public function addData() {
         $table = array(
             'permission_role_relation' => 'permission_role_relation',
         );

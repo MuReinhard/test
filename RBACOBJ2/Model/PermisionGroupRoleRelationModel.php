@@ -9,7 +9,7 @@ use RbacModelInf\RbacRoleModelInf;
  * @class PermisionGroupRoleRelationModel
  * @author ShiO
  */
-class PermisionGroupRoleRelationModelModel extends Model implements RelationModelInf {
+class PermisionGroupRoleRelationModel extends Model implements RelationModelInf {
     public $p_g_r_relation_id;
     public $permission_group_id;
     public $role_id;
@@ -29,7 +29,7 @@ class PermisionGroupRoleRelationModelModel extends Model implements RelationMode
         if ($model instanceof RbacPermissionModelInf && $bindModel instanceof RbacRoleModelInf) {
             $this->permission_group_id = $model->getPk();
             $this->role_id = $bindModel->getPk();
-            $this->addData();
+            return $this;
         }
     }
 

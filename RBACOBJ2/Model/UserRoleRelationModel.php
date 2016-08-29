@@ -26,7 +26,7 @@ class UserRoleRelationModelModel extends Model implements ModelInf, RelationMode
         if ($userModel instanceof RbacUserModelInf && $roleModel instanceof RbacRoleModelInf) {
             $this->user_id = $userModel->getPk();
             $this->role_id = $roleModel->getPk();
-            $this->addData();
+            return $this;
         }
     }
 

@@ -21,6 +21,7 @@ class PermissionGroupRelationModelModel extends Model implements RelationModelIn
     public function connect($model, $bindModel) {
         $this->permission_id = $model->getPk();
         $this->permission_group_id = $bindModel->getPk();
+        return $this;
     }
 
     /**

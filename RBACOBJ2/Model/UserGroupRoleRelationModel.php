@@ -22,7 +22,7 @@ class UserGroupRoleRelationModel extends Model implements ModelInf,RelationModel
     public function connect($userGroupModel, $roleModel) {
         $this->user_group_id = $userGroupModel->getPk();
         $this->role_id = $roleModel->getPk();
-        $this->addData();
+        return $this;
     }
 
     /**

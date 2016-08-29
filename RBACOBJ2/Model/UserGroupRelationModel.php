@@ -1,5 +1,6 @@
 <?php
 namespace Model;
+
 use ModelInf\RelationModelInf;
 use RbacModelInf\RbacUserModelInf;
 
@@ -24,9 +25,8 @@ class UserGroupRelationModel extends Model implements RelationModelInf {
         if ($userModel instanceof RbacUserModelInf && $userGroupModel instanceof RbacUserModelInf) {
             $this->user_id = $userModel->getPk();
             $this->user_group_id = $userGroupModel->getPk();
-            $this->addData();
+            return $this;
         }
-        return $this;
     }
 
     /**
