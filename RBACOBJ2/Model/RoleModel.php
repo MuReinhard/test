@@ -88,7 +88,7 @@ class RoleModel extends Model implements ModelInf, RbacRoleModelInf {
         );
         $where = 'role_id' . '=' . $id;
         $data = $this->table($table)->field()->where($where)->select();
-        $this->modelBean($data);
+        $this->modelBean($data[0]);
         return $this;
     }
 }

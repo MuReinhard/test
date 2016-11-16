@@ -14,4 +14,11 @@ interface RbacUserModelInf {
      */
     public function bindRole(RbacRoleModelInf $roleModel);
 
+    /**
+     * @author ShiO
+     * @param $userId
+     * @return mixed
+     */
+    public function getUserAllRole($userId);
+
 }

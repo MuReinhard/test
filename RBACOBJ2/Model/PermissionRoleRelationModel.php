@@ -14,14 +14,12 @@ class PermissionRoleRelationModel extends Model implements RelationModelInf {
     public $permission_id;
     public $role_id;
 
-    public $psermissionModels;
-    public $roleModels;
 
 
     /**
      * @author ShiO
      * 绑定组成员对象
-     * @param RbacPermissionModel $permissionModel
+     * @param PermissionModel $permissionModel
      * @param RoleModel $roleModel
      * @return mixed
      */

@@ -67,7 +67,16 @@ class UserModel extends Model implements ModelInf, RbacUserModelInf {
         );
         $where = 'user_id' . '=' . $id;
         $data = $this->table($table)->field()->where($where)->select();
-        $this->modelBean($data);
+        $this->modelBean($data[0]);
         return $this;
+    }
+
+    /**
+     * @author ShiO
+     * @param $userId
+     * @return mixed
+     */
+    public function getUserAllRole($userId) {
+        return $data;
     }
 }

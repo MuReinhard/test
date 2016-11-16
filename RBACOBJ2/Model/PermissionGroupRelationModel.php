@@ -14,7 +14,7 @@ class PermissionGroupRelationModelModel extends Model implements RelationModelIn
     /**
      * @author ShiO
      * 绑定组成员对象
-     * @param RbacPermissionModel $model
+     * @param PermissionModel $model
      * @param RbacPermissionGroupModel $bindModel
      * @return mixed
      */

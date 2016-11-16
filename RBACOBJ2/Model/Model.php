@@ -38,8 +38,8 @@ class Model extends Db{
      * @author ShiO
      * @param $data
      */
-    protected function modelBean($data) {
-        foreach ($data[0] as $key => $value) {
+    public function modelBean($data) {
+        foreach ($data as $key => $value) {
             $this->$key = $value;
         }
     }

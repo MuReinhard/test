@@ -9,9 +9,16 @@ use RbacModelInf\RbacRoleModelInf;
  * @author ShiO
  * @date 2015年9月19日21:50:04
  */
-class RbacPermissionModel extends Model implements RbacPermissionModelInf {
+class PermissionModel extends Model implements RbacPermissionModelInf {
     public $permission_id;
     public $permission_name;
+    /**
+     * @author ShiO
+     * RoleModel constructor.
+     */
+    public function __construct() {
+        parent::__construct();
+    }
 
     /**
      * @author ShiO
