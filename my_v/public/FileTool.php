@@ -58,7 +58,6 @@ class FileTool {
      */
     private function pathAnalysis($path) {
         $arr = pathinfo($path);
-        // TODO::解析path中的关键字
         $this->filePath = $path;
         $this->fileName = $arr['basename'];
         $this->fileExt = $arr['extension'];
