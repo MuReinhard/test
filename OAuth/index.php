@@ -22,3 +22,24 @@ BB 用户网页授权信息类
 
 */
 
+$login = new Login();
+$application = new Application();
+
+$context = new Context();
+$context->setConfig(new Config());
+
+$request = new Request();
+$request->setGet($_GET);
+
+// ===============
+
+$auth = new Auth($login, $application);
+$baseAuth = new BaseAuth($login, $application);
+if ($request['scope'] == RequestCodeModel::SNSAPI_BASE) {
+    $fAuth = new SilentAuth($login, $application);
+} else {
+    $fAuth = new WebAuth($login, $application);
+}
+$auth->setHandle($baseAuth);
+$baseAuth->setHandle($fAuth);
+$auth->auth($request, $context);
