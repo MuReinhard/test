@@ -4,21 +4,8 @@
  * @class Auth
  * @author ShiO
  */
-abstract class Auth {
-    protected $login;
-    protected $application;
+abstract class AuthChain {
     protected $next;
-
-    /**
-     * @author ShiO
-     * Auth constructor.
-     * @param Login $login
-     * @param Application $application
-     */
-    public function __construct(Login $login, Application $application) {
-        $this->login = $login;
-        $this->application = $application;
-    }
 
     /**
      * @author ShiO
@@ -29,9 +16,9 @@ abstract class Auth {
 
     /**
      * @author ShiO
-     * @param Auth $next
+     * @param AuthChain $next
      */
-    public function setHandle(Auth $next) {
+    public function setHandle(AuthChain $next) {
         $this->next = $next;
     }
 

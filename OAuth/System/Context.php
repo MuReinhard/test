@@ -6,9 +6,41 @@
  */
 class Context {
     private $config;
-    private $authCreator;
+    private $requestCodeStorage;
+    private $login;
+    private $application;
 
+    /**
+     * @author ShiO
+     * @return Login
+     */
+    public function getLogin() {
+        return $this->login;
+    }
 
+    /**
+     * @author ShiO
+     * @param mixed $login
+     */
+    public function setLogin($login) {
+        $this->login = $login;
+    }
+
+    /**
+     * @author ShiO
+     * @return Application
+     */
+    public function getApplication() {
+        return $this->application;
+    }
+
+    /**
+     * @author ShiO
+     * @param mixed $application
+     */
+    public function setApplication($application) {
+        $this->application = $application;
+    }
 
     /**
      * @author ShiO
@@ -28,10 +60,18 @@ class Context {
 
     /**
      * @author ShiO
-     * @return AuthCreator
+     * @return RequestCodeStorageInf
      */
-    public function getAuthCreator() {
-        return $this->authCreator;
+    public function getRequestCodeStorage() {
+        return $this->requestCodeStorage;
+    }
+
+    /**
+     * @author ShiO
+     * @param RequestCodeStorageInf $requestCodeStorage
+     */
+    public function setRequestCodeStorage(RequestCodeStorageInf $requestCodeStorage) {
+        $this->requestCodeStorage = $requestCodeStorage;
     }
 
 }

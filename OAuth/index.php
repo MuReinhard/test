@@ -1,4 +1,28 @@
 <?php
+function dump($var, $echo=true, $label=null, $strict=true) {
+    $label = ($label === null) ? '' : rtrim($label) . ' ';
+    if (!$strict) {
+        if (ini_get('html_errors')) {
+            $output = print_r($var, true);
+            $output = "<pre>" . $label . htmlspecialchars($output, ENT_QUOTES) . "</pre>";
+        } else {
+            $output = $label . print_r($var, true);
+        }
+    } else {
+        ob_start();
+        var_dump($var);
+        $output = ob_get_clean();
+        if (!extension_loaded('xdebug')) {
+            $output = preg_replace("/\]\=\>\n(\s+)/m", "] => ", $output);
+            $output = '<pre>' . $label . htmlspecialchars($output, ENT_QUOTES) . '</pre>';
+        }
+    }
+    if ($echo) {
+        echo($output);
+        return null;
+    }else
+        return $output;
+}
 /**
  * @author ShiO
  */
@@ -22,24 +46,29 @@ BB 用户网页授权信息类
 
 */
 
-$login = new Login();
-$application = new Application();
-
-$context = new Context();
-$context->setConfig(new Config());
-
-$request = new Request();
-$request->setGet($_GET);
 
 // ===============
 
-$auth = new Auth($login, $application);
-$baseAuth = new BaseAuth($login, $application);
-if ($request['scope'] == RequestCodeModel::SNSAPI_BASE) {
-    $fAuth = new SilentAuth($login, $application);
-} else {
-    $fAuth = new WebAuth($login, $application);
-}
-$auth->setHandle($baseAuth);
-$baseAuth->setHandle($fAuth);
-$auth->auth($request, $context);
+//$context = new Context();
+//$requst = new Request();
+//new Auth($request,$context);
+
+include_once 'Kernel.php';
+include_once 'SystemReflectionClass.php';
+include_once 'AuthContext.php';
+include_once 'ContextInf.php';
+
+
+$kernel = new Kernel();
+$class = new SystemReflectionClass($kernel);
+$class->init();
+$requestResult = $class->getReflectionResult();
+dump($requestResult);
+
+
+
+
+
+
+
+

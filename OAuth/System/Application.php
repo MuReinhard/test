@@ -5,8 +5,8 @@
  * @author ShiO
  */
 class Application {
-    public $permission;
-    public $appId;
+    private $permission;
+    private $appId;
 
     /**
      * @author ShiO

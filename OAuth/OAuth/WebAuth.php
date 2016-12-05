@@ -4,16 +4,17 @@
  * @class SilentAuth
  * @author ShiO
  */
-class WebAuth extends Auth {
+class WebAuth extends AuthChain {
 
     /**
      * @author ShiO
      * @param Request $request
      * @param Context $context
+     * @throws WrongClassTypeException
      */
     public function auth(Request $request, Context $context) {
         if ($request->getGet()['agree'] == 'agree') {
-            $creator = $context->getAuthCreator();
+            $creator = $context->getRequestCodeStorage();
             $creator->data($request);
             $creator->add();
             $code = $creator->getCode();
