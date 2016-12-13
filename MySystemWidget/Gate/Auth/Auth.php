@@ -1,6 +1,7 @@
 <?php
 namespace Gate\Auth;
 
+use Closure;
 use Gate\Model\UserTicketStorageInf;
 use Gate\SystemStorage\StorageInf;
 use Gate\Ticket\TicketInf;
@@ -24,6 +25,20 @@ class Auth {
             // login成功
             $loginUserBeans = LoginUserBeans::getInstance($drive);
             $loginUserBeans->saveLoginData('', $userData);
+        }
+    }
+
+    /**
+     * @author ShiO
+     * 提供自定义储存用户数据的过程，不建议你这样做
+     * @param Closure $func
+     * @param TicketInf $ticket
+     * @param UserTicketStorageInf $model
+     */
+    public function loginUserDefinedSave(Closure $func, TicketInf $ticket, UserTicketStorageInf $model) {
+        if ($userData = $ticket->ticketCheck($model)) {
+            // login成功
+            call_user_func($func, $userData);
         }
     }
 
