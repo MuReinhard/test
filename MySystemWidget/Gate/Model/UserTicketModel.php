@@ -18,7 +18,7 @@ class UserTicketModel implements UserTicketStorageInf {
             'value' => array('eq', $ticket),
         );
         $data = $this->where($where)->select();
-        return $data ? true : false;
+        return $data;
     }
 
     /**
@@ -33,7 +33,7 @@ class UserTicketModel implements UserTicketStorageInf {
             'type' => array('eq', $type),
         );
         $data = $this->where($where)->select();
-        return $data ? true : false;
+        return $data;
     }
 
     /**
@@ -50,6 +50,6 @@ class UserTicketModel implements UserTicketStorageInf {
             'pass' => array('eq', $ticketPass),
         );
         $data = $this->where($where)->select();
-        return $data ? true : false;
+        return $data;
     }
 }
