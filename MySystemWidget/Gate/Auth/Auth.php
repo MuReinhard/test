@@ -50,4 +50,26 @@ class Auth {
         $loginUserBeans = LoginUserBeans::getInstance($drive);
         $loginUserBeans->cleanLoginData();
     }
+
+    /**
+     * @author ShiO
+     * @param $userData
+     * @param TicketInf $ticket
+     * @param UserTicketStorageInf $model
+     */
+    public function register($userData, TicketInf $ticket, UserTicketStorageInf $model) {
+        $ticket->createUserAndTicket($userData, $model);
+    }
+
+    /**
+     * @author ShiO
+     * @param $userData
+     * @param TicketInf $ticket
+     * @param UserTicketStorageInf $model
+     */
+    public function registerAndLogin($userData, TicketInf $ticket, UserTicketStorageInf $model) {
+        $ticket->createUserAndTicket($userData, $model);
+        // 调用登录流程
+        $this->login($ticket, $model);
+    }
 }

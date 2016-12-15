@@ -5,6 +5,7 @@ use Gate\Exception\NotFoundTicketException;
 use Gate\Exception\WrongPassWordException;
 use Gate\Model\UserTicketModel;
 use Gate\Model\UserTicketStorageInf;
+use MySystemWidget\Gate\Exception\TicketExistException;
 
 /**
  * @class TicketPhone
@@ -50,15 +51,30 @@ class TicketPhone implements TicketInf {
         $userData = $model->findUserDataByTicketAndType($this->value, $this->type);
         if ($userData) {
             // 检查password
-            if ($this->passObj) {
-                if($this->passObj->isMainPassCorrect($userData[0]['id'],$userData[0]['salt'])){
-                    return true;
-                } else {
-                    throw new WrongPassWordException();
-                }
+            if ($this->passObj->isMainPassCorrect($userData[0]['id'], $userData[0]['salt'])) {
+                return true;
+            } else {
+                throw new WrongPassWordException();
             }
         } else {
             throw new NotFoundTicketException();
+        }
+    }
+
+    /**
+     * @author ShiO
+     * @param $userData
+     * @param UserTicketStorageInf $model
+     * @throws TicketExistException
+     */
+    public function createUserAndTicket($userData, UserTicketStorageInf $model) {
+        $ticketData = $model->findTicketDataByTicketAndType($this->value, $this->type);
+        if (!$ticketData) {
+            // 票据不存在
+            $userId = $model->addUserData($userData);
+            $model->addTicketDataByUserId($userId, $this->value, $this->type);
+        } else {
+            throw new TicketExistException();
         }
     }
 

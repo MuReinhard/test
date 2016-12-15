@@ -52,4 +52,65 @@ class UserTicketModel implements UserTicketStorageInf {
         $data = $this->where($where)->select();
         return $data;
     }
+
+    /**
+     * @author ShiO
+     * @param $data
+     * @return mixed
+     */
+    public function addUserData($data) {
+        $result = $this->data($data)->addData();
+        return $result;
+    }
+
+    /**
+     * @author ShiO
+     * @param $userId
+     * @param $ticket
+     * @param $type
+     * @return mixed
+     */
+    public function addTicketDataByUserId($userId, $ticket, $type) {
+        $data = array(
+            'ticket_value' => $ticket,
+            'ticket_type' => $type,
+            'user_id' => $userId,
+        );
+        $result = $this->data($data)->addData();
+        return $result;
+    }
+
+    /**
+     * @author ShiO
+     * @param $userId
+     * @param $ticket
+     * @param $type
+     * @param $ticketPass
+     * @return mixed
+     */
+    public function addTicketDataWithPassByUserId($userId, $ticket, $type, $ticketPass) {
+        $data = array(
+            'ticket_value' => $ticket,
+            'ticket_type' => $type,
+            'ticket_pass' => $ticketPass,
+            'user_id' => $userId,
+        );
+        $result = $this->data($data)->addData();
+        return $result;
+    }
+
+    /**
+     * @author ShiO
+     * @param $ticket
+     * @param $type
+     * @return mixed
+     */
+    public function findTicketDataByTicketAndType($ticket, $type) {
+        $data = array(
+            'ticket_value' => $ticket,
+            'ticket_type' => $type,
+        );
+        $result = $this->data($data)->addData();
+        return $result;
+    }
 }

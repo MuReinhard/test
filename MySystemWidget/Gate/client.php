@@ -23,6 +23,11 @@ $auth->login($ticket, new UserTicketModel());
 // 特殊用法-自定义数据存储过程
 $ticket = new TicketPhone('1341');
 $auth = new Auth();
-$auth->loginUserDefinedSave(function($userData){
+$auth->loginUserDefinedSave(function ($userData) {
     // 天知道你怎么存储
-},$ticket, new UserTicketModel());
+}, $ticket, new UserTicketModel());
+
+// 注册用法
+$ticket = new TicketPhone('1341');
+$auth = new Auth();
+$auth->register(array(), $ticket, new UserTicketModel());

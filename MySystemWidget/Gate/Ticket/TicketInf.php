@@ -13,4 +13,5 @@ interface TicketInf {
     public function ticketCheck(UserTicketStorageInf $model);
     public function setPassObj(PassWordInc $passObj);
     public function isTicket($ticketStr);
+    public function createUserAndTicket($userData,UserTicketStorageInf $model);
 }

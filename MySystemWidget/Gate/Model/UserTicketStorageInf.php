@@ -29,5 +29,39 @@ interface UserTicketStorageInf {
      * @param $ticketPass
      * @return mixed
      */
-    public function findUserDataByTicketAndPass($ticket,$type,$ticketPass);
+    public function findUserDataByTicketAndPass($ticket, $type, $ticketPass);
+
+    /**
+     * @author ShiO
+     * @param $ticket
+     * @param $type
+     * @return mixed
+     */
+    public function findTicketDataByTicketAndType($ticket, $type);
+
+    /**
+     * @author ShiO
+     * @param $data
+     * @return mixed
+     */
+    public function addUserData($data);
+
+    /**
+     * @author ShiO
+     * @param $userId
+     * @param $ticket
+     * @param $type
+     * @return mixed
+     */
+    public function addTicketDataByUserId($userId, $ticket, $type);
+
+    /**
+     * @author ShiO
+     * @param $userId
+     * @param $ticket
+     * @param $type
+     * @param $ticketPass
+     * @return mixed
+     */
+    public function addTicketDataWithPassByUserId($userId, $ticket, $type, $ticketPass);
 }
