@@ -64,4 +64,12 @@ interface UserTicketStorageInf {
      * @return mixed
      */
     public function addTicketDataWithPassByUserId($userId, $ticket, $type, $ticketPass);
+
+    /**
+     * @author ShiO
+     * @param $userId
+     * @param $ticktId
+     * @return mixed
+     */
+    public function contactTicketUserRelation($userId, $ticktId);
 }

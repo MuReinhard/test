@@ -2,6 +2,7 @@
 namespace Gate\Auth;
 
 use Closure;
+use Gate\Model\UserTicketModel;
 use Gate\Model\UserTicketStorageInf;
 use Gate\SystemStorage\StorageInf;
 use Gate\Ticket\TicketInf;
@@ -71,5 +72,17 @@ class Auth {
         $ticket->createUserAndTicket($userData, $model);
         // 调用登录流程
         $this->login($ticket, $model);
+    }
+
+    /**
+     * @author ShiO
+     * @param TicketInf $ticket
+     * @param UserTicketModel $model
+     */
+    public function bindTicket(TicketInf $ticket, UserTicketModel $model) {
+        if ($ticket->ticketCheck($model)) {
+            $loingB = LoginUserBeans::getInstance();
+            $ticket->bindUser($loingB, $ticket, $model);
+        }
     }
 }

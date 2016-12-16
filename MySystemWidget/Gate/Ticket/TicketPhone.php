@@ -1,11 +1,13 @@
 <?php
 namespace Gate\Ticket;
 
+use Gate\Auth\LoginUserBeans;
 use Gate\Exception\NotFoundTicketException;
 use Gate\Exception\WrongPassWordException;
 use Gate\Model\UserTicketModel;
 use Gate\Model\UserTicketStorageInf;
 use MySystemWidget\Gate\Exception\TicketExistException;
+use MySystemWidget\Gate\Exception\UserNotLoginException;
 
 /**
  * @class TicketPhone
@@ -93,5 +95,22 @@ class TicketPhone implements TicketInf {
      */
     public function isTicket($ticketStr) {
         return true;
+    }
+
+    /**
+     * @author ShiO
+     * @param LoginUserBeans $loginBean
+     * @param TicketInf $ticket
+     * @param UserTicketStorageInf $model
+     * @throws UserNotLoginException
+     */
+    public function bindUser(LoginUserBeans $loginBean, TicketInf $ticket, UserTicketStorageInf $model) {
+        if (!$loginBean->getLoginData()) {
+            throw new UserNotLoginException();
+        }
+        $ticktData = $model->findTicketDataByTicketAndType($ticket->getTicketValue(), $ticket->getTicketType());
+        if ($ticktData) {
+            $model->contactTicketUserRelation($loginBean->getLoginUid(), $ticktData[0]['ticket_id']);
+        }
     }
 }

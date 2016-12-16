@@ -113,4 +113,19 @@ class UserTicketModel implements UserTicketStorageInf {
         $result = $this->data($data)->addData();
         return $result;
     }
+
+    /**
+     * @author ShiO
+     * @param $userId
+     * @param $ticktId
+     * @return mixed
+     */
+    public function contactTicketUserRelation($userId, $ticktId) {
+        $data = array(
+            'user_id'=> $userId,
+            'ticket_id' => $ticktId,
+        );
+        $result = $this->data($data)->saveData();
+        return $result;
+    }
 }

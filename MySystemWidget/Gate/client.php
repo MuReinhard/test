@@ -31,3 +31,8 @@ $auth->loginUserDefinedSave(function ($userData) {
 $ticket = new TicketPhone('1341');
 $auth = new Auth();
 $auth->register(array(), $ticket, new UserTicketModel());
+
+// 绑定票据给登录用户
+$ticket = new TicketPhone('1341');
+$auth = new Auth();
+$auth->bindTicket($ticket, new UserTicketModel());
