@@ -79,7 +79,7 @@
         var air_force = $("input[name='air_force']").val();
         var area_type = $("select[name='area_type']").val();
         var dice = $("input[name='dice']").val();
-        if (formCheck(attack, defense, area_type, air_force)) {
+        if (formCheck(attack, defense, area_type, air_force, dice)) {
             result = countProportion(attack, defense, area_type, air_force, dice);
             var log = '<p>第' + logNum + '次攻击结算结果：' + result[0] + ',骰子点数：' + result[1] + ' 防御方所处位置：' + area_now + '</p>';
             alert(result[0] + ',骰子点数：' + result[1]);
@@ -97,21 +97,25 @@
         logNum = 1;
     });
 
-    function formCheck(attack, defense, area_type, use_air_force) {
-        if(!attack) {
+    function formCheck(attack, defense, area_type, use_air_force, dice) {
+        if (!attack) {
             alert('没输入攻击力，你的部队都是辣鸡吗？');
             return false;
         }
-        if(!defense) {
+        if (!defense) {
             alert('没输入防御力，对面的部队都就地投降了么？');
             return false;
         }
-        if(!area_type) {
+        if (!area_type) {
             alert('防御部队都在天上飞，一定是系统出bug了 请联系：qq 2607572176,记得截图给我');
             return false;
         }
-        if(!use_air_force) {
+        if (!use_air_force) {
             alert('飞机神秘失踪了，一定是系统出bug了 请联系：qq 2607572176,记得截图给我');
+            return false;
+        }
+        if (!dice && dice > 6) {
+            alert('你的骰子有' + dice + '面？ 你在逗我？');
             return false;
         }
         return true;
@@ -177,7 +181,7 @@
             // 保证骰子从0计数 以命中数组
             dice -= 1;
         }
-        return [decision[dice][column], dice+1];
+        return [decision[dice][column], dice + 1];
     }
 </script>
 </html>
