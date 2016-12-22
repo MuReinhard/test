@@ -29,11 +29,8 @@
     选择二级防御场景：
     <select name="area_type2">
         <option value="plain">无副地形</option>
-        <option value="small_city">小城市</option>
         <option value="small_river">小河</option>
         <option value="big_river">大河</option>
-        <option value="complex">森林 山地 沼泽</option>
-        <option value="big_city">大城市</option>
     </select>
     <br/>
     攻击方是否使用空军：
@@ -146,6 +143,14 @@
         }
         if (!use_air_force) {
             alert('飞机神秘失踪了，一定是系统出bug了 请联系：qq 2607572176,记得截图给我');
+            return false;
+        }
+        if (area_type2 == 'big_river' && area_type2 == 'small_river') {
+            alert('从一条河跨到另一条河？敌人站在水里？水战？');
+            return false;
+        }
+        if (area_type1 == 'big_river' || area_type1 == 'small_river') {
+            alert('从一条河跨到另一条河？敌人站在水里？水战？');
             return false;
         }
         if (dice && dice > 6) {
