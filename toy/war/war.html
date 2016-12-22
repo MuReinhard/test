@@ -194,7 +194,7 @@
     function countProportion(attack, defense, column, air_force, dice) {
         // 计算修正列
         if (air_force == 'use') {
-            column += 1;
+            column++;
         }
         var proportion = 0;
         // 得出比例
@@ -221,7 +221,7 @@
             dice = Math.ceil(Math.random() * 5);
         } else {
             // 保证骰子从0计数 以命中数组
-            dice -= 1;
+            dice--;
         }
         return [decision[dice][column], dice + 1];
     }
