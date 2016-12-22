@@ -17,13 +17,13 @@
     输入骰子（如果为空，系统自动计算）：<input name="dice" type="text"/>
     <br/>
     选择防御场景：<select name="area_type">
-        <option value="plain">平原</option>
-        <option value="small_city">小城市</option>
-        <option value="small_river">小河</option>
-        <option value="big_river">大河</option>
-        <option value="complex">森林 山地 沼泽</option>
-        <option value="big_city">大城市</option>
-    </select>
+    <option value="plain">平原</option>
+    <option value="small_city">小城市</option>
+    <option value="small_river">小河</option>
+    <option value="big_river">大河</option>
+    <option value="complex">森林 山地 沼泽</option>
+    <option value="big_city">大城市</option>
+</select>
     <br/>
     攻击方是否使用空军：
     使用：<input type="radio" name="air_force" value="use"/>
@@ -76,7 +76,7 @@
         var result = null;
         var attack = $("input[name='attack']").val();
         var defense = $("input[name='defense']").val();
-        var air_force = $("input[name='air_force']").val();
+        var air_force = $("input[name='air_force']:checked").val();
         var area_type = $("select[name='area_type']").val();
         var dice = $("input[name='dice']").val();
         if (formCheck(attack, defense, area_type, air_force, dice)) {
@@ -123,10 +123,10 @@
 
 
     // 计算核心算法
-    function countProportion(attack, defense, area_type, use_air_force, dice) {
+    function countProportion(attack, defense, area_type, air_force, dice) {
         // 计算修正列
         var column = 0;
-        if (use_air_force == 'use') {
+        if (air_force == 'use') {
             column += 1;
         }
         switch (area_type) {
