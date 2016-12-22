@@ -93,6 +93,8 @@
         var air_force = $("input[name='air_force']:checked").val();
         var area_type1 = $("select[name='area_type1']").val();
         var area_type2 = $("select[name='area_type2']").val();
+        console.log('地1:'+area_type1);
+        console.log('地2:'+area_type2);
         var dice = $("input[name='dice']").val();
         var column = 0;
         if (formCheck(attack, defense, area_type1, area_type2, air_force, dice)) {
@@ -100,12 +102,12 @@
             attack = count1[0];
             defense = count1[1];
             column = count1[2];
-            console.log('第1次攻击力：' + attack + '第1次防御力：' + defense + '第1次列：' + column);
+            console.log('第1次攻击力：' + attack + '第1次防御力：' + defense + '第1次列：' + column + area_type1);
             var count2 = areaType(attack, defense, column, area_type2);
             attack = count2[0];
             defense = count2[1];
             column = count2[2];
-            console.log('第2次攻击力：' + attack + '第2次防御力：' + defense + '第2次列：' + column);
+            console.log('第2次攻击力：' + attack + '第2次防御力：' + defense + '第2次列：' + column + area_type1);
 
             result = countProportion(attack, defense, column, air_force, dice);
             var log = '<p>第' + logNum + '次攻击结算结果：' + result[0] + ',骰子点数：' + result[1] + ' 防御方所处位置：' + area_now1 + '&&' + area_now2 + '</p>';
@@ -149,7 +151,15 @@
             alert('从一条河跨到另一条河？敌人站在水里？水战？');
             return false;
         }
-        if (area_type1 == 'big_river' || area_type1 == 'small_river') {
+        if (area_type1 == 'big_river' && area_type1 == 'small_river') {
+            alert('从一条河跨到另一条河？敌人站在水里？水战？');
+            return false;
+        }
+        if (area_type1 == 'small_river' && area_type2 == 'small_river') {
+            alert('从一条河跨到另一条河？敌人站在水里？水战？');
+            return false;
+        }
+        if (area_type2 == 'big_river' && area_type2 == 'big_river') {
             alert('从一条河跨到另一条河？敌人站在水里？水战？');
             return false;
         }
