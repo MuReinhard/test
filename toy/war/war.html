@@ -147,11 +147,11 @@
             alert('飞机神秘失踪了，一定是系统出bug了 请联系：qq 2607572176,记得截图给我');
             return false;
         }
-        if (area_type2 == 'big_river' && area_type2 == 'small_river') {
+        if (area_type2 == 'big_river' && area_type1 == 'small_river') {
             alert('从一条河跨到另一条河？敌人站在水里？水战？');
             return false;
         }
-        if (area_type1 == 'big_river' && area_type1 == 'small_river') {
+        if (area_type1 == 'big_river' && area_type2 == 'small_river') {
             alert('从一条河跨到另一条河？敌人站在水里？水战？');
             return false;
         }
@@ -159,7 +159,7 @@
             alert('从一条河跨到另一条河？敌人站在水里？水战？');
             return false;
         }
-        if (area_type2 == 'big_river' && area_type2 == 'big_river') {
+        if (area_type2 == 'big_river' && area_type1 == 'big_river') {
             alert('从一条河跨到另一条河？敌人站在水里？水战？');
             return false;
         }
