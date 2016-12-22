@@ -16,14 +16,25 @@
     <br/>
     输入骰子（如果为空，系统自动计算）：<input name="dice" type="text"/>
     <br/>
-    选择防御场景：<select name="area_type">
-    <option value="plain">平原</option>
-    <option value="small_city">小城市</option>
-    <option value="small_river">小河</option>
-    <option value="big_river">大河</option>
-    <option value="complex">森林 山地 沼泽</option>
-    <option value="big_city">大城市</option>
-</select>
+    选择防御场景：
+    <select name="area_type1">
+        <option value="plain">平原</option>
+        <option value="small_city">小城市</option>
+        <option value="small_river">小河</option>
+        <option value="big_river">大河</option>
+        <option value="complex">森林 山地 沼泽</option>
+        <option value="big_city">大城市</option>
+    </select>
+    <br/>
+    选择二级防御场景(默认为平原，即不影响战斗计算)：
+    <select name="area_type2">
+        <option value="plain">无副地形</option>
+        <option value="small_city">小城市</option>
+        <option value="small_river">小河</option>
+        <option value="big_river">大河</option>
+        <option value="complex">森林 山地 沼泽</option>
+        <option value="big_city">大城市</option>
+    </select>
     <br/>
     攻击方是否使用空军：
     使用：<input type="radio" name="air_force" value="use"/>
@@ -53,11 +64,17 @@
     ];
 
     var resultDiv = $('#result');
-    var areaSelect = $("select[name='area_type']");
-    var area_now = areaSelect.find('option').eq(0).text();
+    var areaSelect1 = $("select[name='area_type1']");
+    var areaSelect2 = $("select[name='area_type2']");
+    var area_now1 = areaSelect1.find('option').eq(0).text();
+    var area_now2 = areaSelect2.find('option').eq(0).text();
     // 地区改变事件
-    areaSelect.change(function (e) {
-        area_now = $(this).children('option:selected').text();
+    areaSelect1.change(function (e) {
+        area_now1 = $(this).children('option:selected').text();
+    });
+
+    areaSelect2.change(function (e) {
+        area_now2 = $(this).children('option:selected').text();
     });
 
     // 日志区显示/隐藏
@@ -77,11 +94,24 @@
         var attack = $("input[name='attack']").val();
         var defense = $("input[name='defense']").val();
         var air_force = $("input[name='air_force']:checked").val();
-        var area_type = $("select[name='area_type']").val();
+        var area_type1 = $("select[name='area_type1']").val();
+        var area_type2 = $("select[name='area_type2']").val();
         var dice = $("input[name='dice']").val();
-        if (formCheck(attack, defense, area_type, air_force, dice)) {
-            result = countProportion(attack, defense, area_type, air_force, dice);
-            var log = '<p>第' + logNum + '次攻击结算结果：' + result[0] + ',骰子点数：' + result[1] + ' 防御方所处位置：' + area_now + '</p>';
+        var column = 0;
+        if (formCheck(attack, defense, area_type1, area_type2, air_force, dice)) {
+            var count1 = areaType(attack, defense, column, area_type1);
+            attack = count1[0];
+            defense = count1[1];
+            column = count1[2];
+            console.log('第1次攻击力：' + attack + '第1次防御力：' + defense + '第1次列：' + column);
+            var count2 = areaType(attack, defense, column, area_type2);
+            attack = count2[0];
+            defense = count2[1];
+            column = count2[2];
+            console.log('第2次攻击力：' + attack + '第2次防御力：' + defense + '第2次列：' + column);
+
+            result = countProportion(attack, defense, column, air_force, dice);
+            var log = '<p>第' + logNum + '次攻击结算结果：' + result[0] + ',骰子点数：' + result[1] + ' 防御方所处位置：' + area_now1 + '&&' + area_now2 + '</p>';
             alert(result[0] + ',骰子点数：' + result[1]);
 
             // 填充日志
@@ -97,7 +127,7 @@
         logNum = 1;
     });
 
-    function formCheck(attack, defense, area_type, use_air_force, dice) {
+    function formCheck(attack, defense, area_type1, area_type2, use_air_force, dice) {
         if (!attack) {
             alert('没输入攻击力，你的部队都是辣鸡吗？');
             return false;
@@ -106,7 +136,11 @@
             alert('没输入防御力，对面的部队都就地投降了么？');
             return false;
         }
-        if (!area_type) {
+        if (!area_type1) {
+            alert('防御部队都在天上飞，一定是系统出bug了 请联系：qq 2607572176,记得截图给我');
+            return false;
+        }
+        if (!area_type2) {
             alert('防御部队都在天上飞，一定是系统出bug了 请联系：qq 2607572176,记得截图给我');
             return false;
         }
@@ -121,38 +155,42 @@
         return true;
     }
 
-
-    // 计算核心算法
-    function countProportion(attack, defense, area_type, air_force, dice) {
-        // 计算修正列
-        var column = 0;
-        if (air_force == 'use') {
-            column += 1;
-        }
+    function areaType(attack, defense, column, area_type) {
         switch (area_type) {
             case 'small_city':
-                defense += 1;
+                defense++;
+                alert(defense);
                 break;
             case 'small_river':
-                attack -= 1;
+                attack--;
                 break;
             case 'big_river':
                 attack = Math.ceil(attack / 2);
                 break;
             case 'complex':
-                column -= 1;
+                column--;
                 if (column < 0) {
                     column = 0;
                 }
                 break;
             case 'big_city':
-                column -= 1;
+                column--;
                 if (column < 0) {
                     column = 0;
                 }
                 break;
             case 'plain':
                 break;
+        }
+        return [attack, defense, column];
+    }
+
+
+    // 计算核心算法
+    function countProportion(attack, defense, column, air_force, dice) {
+        // 计算修正列
+        if (air_force == 'use') {
+            column += 1;
         }
         var proportion = 0;
         // 得出比例
