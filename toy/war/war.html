@@ -17,6 +17,7 @@
     输入骰子（如果为空，系统自动计算）：<input name="dice" type="text"/>
     <br/>
     选择防御场景：<select name="area_type">
+        <option value="plain">平原</option>
         <option value="small_city">小城市</option>
         <option value="small_river">小河</option>
         <option value="big_river">大河</option>
@@ -146,6 +147,8 @@
                     column = 0;
                 }
                 break;
+            case 'plain':
+                break;
         }
         var proportion = 0;
         // 得出比例
@@ -174,7 +177,7 @@
             // 保证骰子从0计数 以命中数组
             dice -= 1;
         }
-        return [decision[dice][column], dice];
+        return [decision[dice][column], dice+1];
     }
 </script>
 </html>
