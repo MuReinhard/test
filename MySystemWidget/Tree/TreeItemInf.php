@@ -1,5 +1,5 @@
 <?php
-namespace MySystemWidget\Tree;
+namespace Tree;
 /**
  * @class TreeItemInf
  * @author ShiO
