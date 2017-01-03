@@ -5,5 +5,16 @@ namespace Tree;
  * @author ShiO
  */
 interface TreeInf {
-    public function getBean();
+    /**
+     * @author ShiO
+     * @return mixed
+     */
+    public function getData();
+
+    /**
+     * @author ShiO
+     * TreeInf constructor.
+     * @param $data
+     */
+    public function __construct($data);
 }

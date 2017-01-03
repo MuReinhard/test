@@ -4,19 +4,24 @@ namespace Tree;
  * @class TreeBranch
  * @author ShiO
  */
-interface TreeBranchInf extends TreeInf{
+interface TreeBranchInf extends TreeInf {
     /**
      * @author ShiO
      * @param TreeInf $tree
      * @return mixed
      */
-    public function add(TreeInf $tree);
+    public function addChild(TreeInf $tree);
 
     /**
      * @author ShiO
-     * @param TreeInf $tree
      * @return mixed
      */
-    public function getTrees(TreeInf $tree);
+    public function getChilds();
+
+    /**
+     * @author ShiO
+     * @return mixed
+     */
+    public function toArray();
 
 }
