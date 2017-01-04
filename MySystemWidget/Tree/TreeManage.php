@@ -27,14 +27,19 @@ class TreeManage {
      * @param int $root
      */
     private function analysisList($data, $pk = 'id', $pPk = 'pid', $root = 0) {
-        $rootArr = array_filter($data, function ($arr) use ($root, $pPk) {
-            if ($arr[$pPk] == $root) {
-                return true;
+        $rootArr = array();
+        foreach ($data as $arr) {
+            if ($root == 0) {
+                $find = $pPk;
             } else {
-                return false;
+                $find = $pk;
             }
-        });
-        $rootPk = $rootArr[0][$pk];
+            if ($arr[$find] == $root) {
+                $rootArr = $arr;
+                break;
+            }
+        }
+        $rootPk = $rootArr[$pk];
 
         $allObjArr = array();
         foreach ($data as $arr) {
