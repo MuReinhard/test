@@ -27,11 +27,13 @@ class TreeManage {
         $crateArr = array();
         foreach ($childData as $child) {
             $parentId = $child[$parentPk];
-            if ($crateArr[$parentId]) {
+            if (isset($crateArr[$parentId])) {
+                // 对象已经存储
                 $parentObj = $crateArr[$parentId];
             } else {
+                // 对象尚未存储
                 $parent = $parentData[$parentId];
-                $parentObj = new TreeBranch($parent);
+                $parentObj = new TreeBranch($parent[0]);
                 $crateArr[$parentId] = $parentObj;
             }
             $childObj = new TreeBranch($child);
