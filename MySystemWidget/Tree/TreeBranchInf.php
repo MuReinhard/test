@@ -62,4 +62,17 @@ interface TreeBranchInf extends TreeInf {
      * @return mixed
      */
     public function findBySelector(Closure $selectorFun);
+
+    /**
+     * @author ShiO
+     * @param TreeInf $tree
+     * @return mixed
+     */
+    public function setParent(TreeInf $tree);
+
+    /**
+     * @author ShiO
+     * @return TreeInf
+     */
+    public function getParent();
 }

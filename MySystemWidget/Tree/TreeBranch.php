@@ -9,6 +9,7 @@ use Closure;
  */
 class TreeBranch implements TreeBranchInf {
     public $childs = array();
+    public $parent = null;
     public $data = array();
 
     /**
@@ -68,18 +69,21 @@ class TreeBranch implements TreeBranchInf {
      * @return mixed|void
      */
     public function remove(Closure $removeFun = null) {
-        // 所有元素
+        // 先处理再删除，删了就没了
+        if ($removeFun) {
+            call_user_func($removeFun, $this);
+        }
         $this->data = null;
+        // 删除元素是不用触发子对象的，但是需要针对元素进行删库处理，所以此处循环触发子方法
         if ($this->childs) {
             foreach ($this->childs as $item) {
                 $item->remove($removeFun);
-                // 把子对象也清理干净
-                $key = array_search($item, $this->childs);
-                unset($this->childs[$key]);
             }
         }
-        if ($removeFun) {
-            call_user_func($removeFun, $this);
+        if ($this->parent) {
+            // 去父对象中找自己，把自己清除掉
+            $key = array_search($this, $this->parent->childs);
+            unset($this->parent->childs[$key]);
         }
     }
 
@@ -145,5 +149,22 @@ class TreeBranch implements TreeBranchInf {
             }
         }
         return false;
+    }
+
+    /**
+     * @author ShiO
+     * @param TreeInf $tree
+     * @return mixed
+     */
+    public function setParent(TreeInf $tree) {
+        $this->parent = $tree;
+    }
+
+    /**
+     * @author ShiO
+     * @return TreeInf
+     */
+    public function getParent() {
+        return $this->parent;
     }
 }
