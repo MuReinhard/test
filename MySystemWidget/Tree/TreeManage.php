@@ -58,66 +58,6 @@ class TreeManage {
         }
         return $allObjArr[$rootPk];
     }
-
-
-    /**
-     * @author ShiO
-     * @param $list
-     * @param string $pk
-     * @param string $pid
-     * @param string $child
-     * @param int $root
-     * @return array
-     */
-    function listToTree($list, $pk = 'id', $pid = 'pid', $child = '_child', $root = 0) {
-        // 创建Tree
-        $tree = array();
-        if (is_array($list)) {
-            // 创建基于主键的数组引用
-            $refer = array();
-            foreach ($list as $key => $data) {
-                $refer[$data[$pk]] =& $list[$key];
-            }
-            foreach ($list as $key => $data) {
-                // 判断是否存在parent
-                $parentId = $data[$pid];
-                if ($root == $parentId) {
-                    $tree[] =& $list[$key];
-                } else {
-                    if (isset($refer[$parentId])) {
-                        $parent =& $refer[$parentId];
-                        $parent[$child][] =& $list[$key];
-                    }
-                }
-            }
-        }
-        return $tree;
-    }
-
-    /**
-     * @author ShiO
-     * @param $arr2D
-     * @param $sortKey
-     * @param int $sortType
-     * @return array|bool
-     */
-    public function sort2DArrByKey($arr2D, $sortKey, $sortType = SORT_ASC) {
-        if (is_array($arr2D)) {
-            foreach ($arr2D as $row_array) {
-                if (is_array($row_array)) {
-                    $key_array[] = $row_array[$sortKey];
-                } else {
-                    return false;
-                }
-            }
-        } else {
-            return false;
-        }
-        array_multisort($key_array, $sortType, $arr2D);
-        return $arr2D;
-    }
-
-
     /**
      * @author ShiO
      * @param $childData
