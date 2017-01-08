@@ -1,16 +1,43 @@
 <?php
 namespace Tree;
+
+use Closure;
+use TreeManageInf;
+
 /**
  * @class TreeManage
  * @author ShiO
  */
-class TreeManage {
+class TreeManage implements TreeManageInf {
+    private $crateFun = null;
+
+    /**
+     * @author ShiO
+     * TreeManage constructor.
+     * @param Closure $crateFun
+     */
+    public function __construct(Closure $crateFun = null) {
+        if ($crateFun) {
+            $this->crateFun = $crateFun;
+        }
+    }
+
     /**
      * @author ShiO
      * @param $data
      * @return TreeBranch
      */
-    public function crate($data) {
+    public function crateItem($data) {
+        $itemObj = new TreeBranch($data, $this->crateFun);
+        return $itemObj;
+    }
+
+    /**
+     * @author ShiO
+     * @param $data
+     * @return TreeBranch
+     */
+    public function crateTree($data) {
         // 标准树结构数组解析
         $pk = 'id';
         $pid = 'pid';
@@ -43,7 +70,7 @@ class TreeManage {
 
         $allObjArr = array();
         foreach ($data as $arr) {
-            $allObjArr[$arr[$pk]] = new TreeBranch($arr);
+            $allObjArr[$arr[$pk]] = new TreeBranch($arr, $this->crateFun);
         }
 
         foreach ($data as $arr) {
@@ -58,6 +85,7 @@ class TreeManage {
         }
         return $allObjArr[$rootPk];
     }
+
     /**
      * @author ShiO
      * @param $childData
@@ -76,10 +104,10 @@ class TreeManage {
             } else {
                 // 对象尚未存储
                 $parent = $parentData[$parentId];
-                $parentObj = new TreeBranch($parent[0]);
+                $parentObj = new TreeBranch($parent[0], $this->crateFun);
                 $crateArr[$parentId] = $parentObj;
             }
-            $childObj = new TreeBranch($child);
+            $childObj = new TreeBranch($child, $this->crateFun);
             $childObj->setParent($parentObj);
             $parentObj->addChild($childObj);
             $crateArr[$parentId] = $parentObj;

@@ -32,7 +32,7 @@ interface TreeBranchInf extends TreeInf {
      * @param $removeFun
      * @return mixed
      */
-    public function remove(Closure $removeFun);
+    public function remove(Closure $removeFun = null);
 
     /**
      * @author ShiO
@@ -40,7 +40,7 @@ interface TreeBranchInf extends TreeInf {
      * @param Closure $saveFun
      * @return mixed
      */
-    public function save($data, Closure $saveFun);
+    public function save($data, Closure $saveFun = null);
 
     /**
      * @author ShiO

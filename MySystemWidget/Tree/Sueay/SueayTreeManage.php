@@ -1,22 +1,28 @@
 <?php
 namespace Tree\Sueay;
 
+use Closure;
+use Exception;
 use Tree\TreeBranch;
 use Tree\TreeManage;
+use TreeManageInf;
 
 /**
  * @class SuAdapter
  * @author ShiO
  */
-class SueayTreeManage {
+class SueayTreeManage implements TreeManageInf {
     public $adaptered;
+    private $crateFun;
 
     /**
      * @author ShiO
      * SueayManageAdapter constructor.
+     * @param Closure $createFun
      */
-    public function __construct() {
-        $this->adaptered = new TreeManage();
+    public function __construct(Closure $createFun = null) {
+        $this->crateFun = $createFun;
+        $this->adaptered = new TreeManage($this->crateFun);
     }
 
     /**
@@ -25,11 +31,16 @@ class SueayTreeManage {
      * @param $questionData
      * @param $optionData
      * @return TreeBranch
+     * @throws Exception
      */
-    public function crate($sueayData, $questionData, $optionData) {
+    public function crateTree($sueayData, $questionData = null, $optionData = null) {
+        if (!$sueayData || !$questionData || !$optionData) {
+            throw new Exception();
+            // 参数错误
+        }
         $questionArr = $this->adaptered->crateChildAndPrent($optionData, $questionData, 'question_id');
 
-        $sueayObj = new TreeBranch($sueayData[0]);
+        $sueayObj = new TreeBranch($sueayData[0], $this->crateFun);
         foreach ($questionArr as $questionObj) {
             if ($questionObj instanceof TreeBranch) {
                 $questionObj->setParent($sueayObj);
@@ -39,5 +50,15 @@ class SueayTreeManage {
             $sueayObj->addChild($questionObj);
         }
         return $sueayObj;
+    }
+
+    /**
+     * @author ShiO
+     * @param $data
+     * @return mixed
+     */
+    public function crateItem($data) {
+        $itemObj = new TreeBranch($data, $this->crateFun);
+        return $itemObj;
     }
 }

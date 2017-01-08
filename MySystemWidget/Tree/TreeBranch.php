@@ -16,9 +16,13 @@ class TreeBranch implements TreeBranchInf {
      * @author ShiO
      * TreeBranch constructor.
      * @param $data
+     * @param Closure $crateFun
      */
-    public function __construct($data) {
+    public function __construct($data, Closure $crateFun = null) {
         $this->data = $data;
+        if ($crateFun) {
+            call_user_func($crateFun, $this);
+        }
     }
 
     /**
@@ -94,10 +98,10 @@ class TreeBranch implements TreeBranchInf {
      * @return mixed|void
      */
     public function save($data, Closure $saveFun = null) {
-        $this->data = $data;
         if ($saveFun) {
             call_user_func($saveFun, $this);
         }
+        $this->data = $data;
     }
 
     /**
