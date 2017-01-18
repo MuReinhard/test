@@ -1,0 +1,73 @@
+<script>
+    // 一切不按照基本法的继承都是耍流氓
+    // 重要概念区分：
+    // 原型与实例为两种不同的东西
+
+    var F = function () {
+        this.age = '80';
+        this.name = 'F';
+        this.ppp = '1';
+        this.m = function() {
+            this.age = '800';
+            this.name = 'Fm';
+        };
+    };
+    var f = function () {
+        this.age = '11';
+        this.name = 'f';
+        this.m = function() {
+            this.age = '111';
+            this.name = 'fm';
+        };
+        this.erbai = new erbai();
+    };
+    var erbai = function() {
+        this.age = 20;
+    };
+    //    1__利用假象
+    //    f.prototype.jj = 'have';
+    //
+    //    var xx =  new f();
+    //    var xx2 =  new f();
+    //
+    //    console.log(xx2.jj);
+
+    // 2__继承与覆盖
+    //    f.prototype = new F();
+    //    var now = new f();
+    //    console.log(now);
+
+    // 图纸子类指向实例父类（error）
+    //    var now = f();
+    //    now.prototype = new F();
+    //    console.log(now);
+
+    // this在方法中的作用域
+//    f.prototype = new F();
+//    var now = new f();
+//    now.m();
+//    console.log(now.name);
+
+    // 为什么，普通对象没有prototype??
+//    var o1 = {};
+//    var o2 =new Object();
+//    function f1() {}
+//    var o3 = new f1();
+    // 表面特性分析
+    // 没有prototype意味着无法继承其他对象
+    // o1,2,3本身就不可能处于拥有构造函数的形态？
+    // 从用法上分析，一个已经形成的实例，不能临时继承对象，这对编译器来说是不可能完成的任务
+    //尝试实例是否能够继承(error)
+//    f.prototype = new F();
+//    var now = new f();
+//    var erbaiObj = now.erbai;
+//    erbaiObj.prototype = new F();
+//    console.log(erbaiObj.name);
+
+    // prototype指向的是本原型对象(__proto__)，而本原型对象指向父类的prototype 如果没有呢？？底层会如何操作
+    // 不会，从一开始就证明了，一个没有prototype的对象，是无法继承的，换句话说，从开始就没有指向的机会 在定义的时候，你就不可能给一个对象的prototype赋值一个对象（而这个对象没有prototype），很容易就能区分出谁是可以有爸爸的，谁是已经生成实例不能有爸爸的
+
+    //由此可以下出第一个结论，prototype有阻止一个生成实例再继承其他类的功能
+
+
+</script>
