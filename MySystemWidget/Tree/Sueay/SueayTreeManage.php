@@ -1,28 +1,22 @@
 <?php
 namespace Tree\Sueay;
 
-use Closure;
-use Exception;
 use Tree\TreeBranch;
 use Tree\TreeManage;
-use TreeManageInf;
 
 /**
  * @class SuAdapter
  * @author ShiO
  */
-class SueayTreeManage implements TreeManageInf {
+class SueayTreeManage {
     public $adaptered;
-    private $crateFun;
 
     /**
      * @author ShiO
      * SueayManageAdapter constructor.
-     * @param Closure $createFun
      */
-    public function __construct(Closure $createFun = null) {
-        $this->crateFun = $createFun;
-        $this->adaptered = new TreeManage($this->crateFun);
+    public function __construct() {
+        $this->adaptered = new TreeManage();
     }
 
     /**
@@ -30,17 +24,13 @@ class SueayTreeManage implements TreeManageInf {
      * @param $sueayData
      * @param $questionData
      * @param $optionData
+     * @param string $questionIdField
      * @return TreeBranch
-     * @throws Exception
      */
-    public function crateTree($sueayData, $questionData = null, $optionData = null) {
-        if (!$sueayData || !$questionData || !$optionData) {
-            throw new Exception();
-            // 参数错误
-        }
-        $questionArr = $this->adaptered->crateChildAndPrent($optionData, $questionData, 'question_id');
+    public function crate($sueayData, $questionData, $optionData, $questionIdField = 'question_id') {
+        $questionArr = $this->adaptered->crateChildAndPrent($optionData, $questionData, $questionIdField);
 
-        $sueayObj = new TreeBranch($sueayData[0], $this->crateFun);
+        $sueayObj = new TreeBranch($sueayData[0]);
         foreach ($questionArr as $questionObj) {
             if ($questionObj instanceof TreeBranch) {
                 $questionObj->setParent($sueayObj);
@@ -50,15 +40,5 @@ class SueayTreeManage implements TreeManageInf {
             $sueayObj->addChild($questionObj);
         }
         return $sueayObj;
-    }
-
-    /**
-     * @author ShiO
-     * @param $data
-     * @return mixed
-     */
-    public function crateItem($data) {
-        $itemObj = new TreeBranch($data, $this->crateFun);
-        return $itemObj;
     }
 }

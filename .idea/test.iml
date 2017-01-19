@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="WEB_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/composer_v/MFFC/vendor" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/composer_v/MFFC/vendor/doctrine/inflector/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/composer_v/MFFC/vendor/doctrine/inflector/lib" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/composer_v/MFFC/vendor/nesbot/carbon/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/RBACOBJ" isTestSource="false" packagePrefix="Admin" />
+      <sourceFolder url="file://$MODULE_DIR$/RBACOBJ2" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$" isTestSource="true" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>

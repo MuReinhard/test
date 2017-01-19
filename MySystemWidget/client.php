@@ -3,6 +3,7 @@
  * @author ShiO
  */
 // 全白创建场景
+use Tree\Model\SurveyModel;
 use Tree\Sueay\SueayTreeManage;
 use Tree\TreeBranch;
 use Tree\TreeManage;
@@ -108,73 +109,52 @@ $data = array(
         'pid' => 8,
     ),
 );
-$manage = new TreeManage(function (TreeBranch $item) {
-    $data = $item->data;
-    // 新增每个节点到数据库
-    switch ($data['type']) {
-        case 1:
-            break;
-        case 2:
-            break;
-        case 3:
-            break;
-    }
-});
-$data = $manage->crateTree($data);
-dump($data->toArray());
+//$manage = new TreeManage();
+//$data = $manage->crate($data);
+//dump($data->toArray());
 
-$manage = new SueayTreeManage(function (TreeBranch $item) {
-    $data = $item->data;
-    // 新增每个节点到数据库
-    switch ($data['type']) {
-        case 1:
-            break;
-        case 2:
-            break;
-        case 3:
-            break;
-    }
+$manage = new SueayTreeManage();
+$obj = $manage->crate($sueayData, $questionData, $optionData);
+//$obj->findBySelector(function (TreeBranch $item) {
+//    $data = $item->getData();
+//    if ($data['question_id'] == 1 and $data['type'] == 2) {
+//        return true;
+//    } else {
+//        return false;
+//    }
+//})->remove();
+//$arr = $obj->toArray();
+//dump($arr);
 
-});
-$obj = $manage->crateTree($sueayData, $questionData, $optionData);
 $obj->findBySelector(function (TreeBranch $item) {
-    $data = $item->getData();
-    if ($data['question_id'] == 1 and $data['type'] == 2) {
+    $data = $item->data;
+    if (isset($data['question_id']) && $data['question_id'] == 2 && $data['type'] == 2) {
         return true;
     } else {
         return false;
     }
 })->remove();
-$arr = $obj->toArray();
-dump($arr);
 
-$obj->findBySelector(function (TreeBranch $item) {
-    $data = $item->data;
-    if (isset($data['question_id']) && $data['question_id'] == 1 && $data['type'] == 2) {
-        return true;
-    } else {
-        return false;
-    }
-})->remove(function (TreeBranch $item) {
-    $data = $item->data;
-    switch ($data['type']) {
-        case 1:
-            echo '您删除了问卷：';
-            echo $data['sueay_id'];
-            echo '<br/>';
-            break;
-        case 2:
-            echo '您删除了问题：';
-            echo $data['question_id'];
-            echo '<br/>';
-            break;
-        case 3:
-            echo '您删除了选项：';
-            echo $data['option_id'];
-            echo '<br/>';
-            break;
-    }
-});
+//    ->remove(function (TreeBranch $item) {
+//    $data = $item->data;
+//    switch ($data['type']) {
+//        case 1:
+//            echo '您删除了问卷：';
+//            echo $data['sueay_id'];
+//            echo '<br/>';
+//            break;
+//        case 2:
+//            echo '您删除了问题：';
+//            echo $data['question_id'];
+//            echo '<br/>';
+//            break;
+//        case 3:
+//            echo '您删除了选项：';
+//            echo $data['option_id'];
+//            echo '<br/>';
+//            break;
+//    }
+//});
 $arr = $obj->toArray();
-dump($arr['_child']);
+print_r($arr);
 
