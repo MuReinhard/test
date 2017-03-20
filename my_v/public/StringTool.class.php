@@ -13,6 +13,7 @@
  * all_external_link 检测字符串是否包含外链
  * get_first_img 取得内容中的第一张图片
  * dump 浏览器友好输出格式
+ * getBetreenStr 得到指定字符之间的字符串
  */
 class StringTool {
 	/**
@@ -297,6 +298,21 @@ class StringTool {
             return null;
         }else
             return $output;
+    }
+
+    /**
+     * @author ShiO
+     * @param $str
+     * @param $start_str
+     * @param $end_str
+     * @return string
+     */
+    function getBetreenStr($str, $start_str, $end_str) {
+        $start_pos = strpos($str, $start_str) + strlen($start_str);
+        $end_pos = strpos($str, $end_str, $start_pos);
+        $lenth = $end_pos - $start_pos;
+        $contents = substr($str, $start_pos, $lenth);
+        return $contents;
     }
 
 
