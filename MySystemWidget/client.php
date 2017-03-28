@@ -2,159 +2,63 @@
 /**
  * @author ShiO
  */
-// 全白创建场景
-use Tree\Model\SurveyModel;
-use Tree\Sueay\SueayTreeManage;
-use Tree\TreeBranch;
-use Tree\TreeManage;
+//$upload = new upload();
+//$upload->saveImg();
 
-// 修改+创建场景
-$sueayData = array(
-    array(
-        'survey_id' => 1,
-        'name' => '问卷',
-        'type' => 1,
-    ),
-);
-$questionData = array(
-    array(
-        'question_id' => 1,
-        'name' => '问题1',
-        'survey_id' => 1,
-        'type' => 2,
-    ),
-    array(
-        'question_id' => 2,
-        'name' => '问题2',
-        'survey_id' => 1,
-        'type' => 2,
-    ),
-);
-$optionData = array(
-    array(
-        'option_id' => 1,
-        'name' => '选项11',
-        'question_id' => 1,
-        'type' => 3,
-    ),
-    array(
-        'option_id' => 2,
-        'name' => '选项12',
-        'question_id' => 1,
-        'type' => 3,
-    ),
-    array(
-        'option_id' => 3,
-        'name' => '选项13',
-        'question_id' => 1,
-        'type' => 3,
-    ),
-    array(
-        'option_id' => 3,
-        'name' => '选项23',
-        'question_id' => 2,
-        'type' => 3,
-    ),
-    array(
-        'option_id' => 4,
-        'name' => '选项24',
-        'question_id' => 2,
-        'type' => 3,
-    ),
-);
-$data = array(
-    array(
-        'id' => 1,
-        'name' => '问卷',
-        'pid' => 0,
-    ),
-    array(
-        'id' => 21,
-        'name' => '题目1',
-        'pid' => 1,
-    ),
-    array(
-        'id' => 3,
-        'name' => '题目2',
-        'pid' => 1,
-    ),
-    array(
-        'id' => 4,
-        'name' => '1选项A',
-        'pid' => 21,
-    ),
-    array(
-        'id' => 5,
-        'name' => '1选项B',
-        'pid' => 21,
-    ),
-    array(
-        'id' => 6,
-        'name' => '2选项A',
-        'pid' => 3,
-    ),
-    array(
-        'id' => 7,
-        'name' => '2选项B',
-        'pid' => 3,
-    ),
-    array(
-        'id' => 8,
-        'name' => '2选项C',
-        'pid' => 3,
-    ),
-    array(
-        'id' => 9,
-        'name' => 'hi',
-        'pid' => 8,
-    ),
-);
-//$manage = new TreeManage();
-//$data = $manage->crate($data);
-//dump($data->toArray());
+//$request = new SystemRequest();
+//dump($_REQUEST);
+//$request->getRequest('');
+$re = new \Upload\Tool\UploadFileUtil();
+$re->upload('uploadSite/');
+echo '1';
 
-$manage = new SueayTreeManage();
-$obj = $manage->crate($sueayData, $questionData, $optionData);
-//$obj->findBySelector(function (TreeBranch $item) {
-//    $data = $item->getData();
-//    if ($data['question_id'] == 1 and $data['type'] == 2) {
-//        return true;
-//    } else {
-//        return false;
-//    }
-//})->remove();
-//$arr = $obj->toArray();
-//dump($arr);
 
-$obj->findBySelector(function (TreeBranch $item) {
-    $data = $item->data;
-    if (isset($data['question_id']) && $data['question_id'] == 2 && $data['type'] == 2) {
-        return true;
-    } else {
-        return false;
+class upload {
+    /**
+     * @author ShiO
+     * @param int $max
+     */
+    public function saveImg($max = 2000000) {
+        if ((($_FILES["file"]["type"] == "image/gif")
+                || ($_FILES["file"]["type"] == "image/jpeg")
+                || ($_FILES["file"]["type"] == "image/pjpeg"))
+            && ($_FILES["file"]["size"] < $max)
+        ) {
+            if ($_FILES["file"]["error"] > 0) {
+                echo "Return Code: " . $_FILES["file"]["error"] . "<br />";
+            } else {
+                echo "Upload: " . $_FILES["file"]["name"] . "<br />";
+                echo "Type: " . $_FILES["file"]["type"] . "<br />";
+                echo "Size: " . ($_FILES["file"]["size"] / 1024) . " Kb<br />";
+                echo "Temp file: " . $_FILES["file"]["tmp_name"] . "<br />";
+
+                if (file_exists("upload/" . $_FILES["file"]["name"])) {
+                    echo $_FILES["file"]["name"] . " already exists. ";
+                } else {
+                    move_uploaded_file($_FILES["file"]["tmp_name"],
+                        "upload/" . $_FILES["file"]["name"]);
+                    echo "Stored in: " . "upload/" . $_FILES["file"]["name"];
+                }
+            }
+        } else {
+            echo "Invalid file";
+        }
     }
-})->remove();
 
-//    ->remove(function (TreeBranch $item) {
-//    $data = $item->data;
-//    switch ($data['type']) {
-//        case 1:
-//            echo '您删除了问卷：';
-//            echo $data['sueay_id'];
-//            echo '<br/>';
-//            break;
-//        case 2:
-//            echo '您删除了问题：';
-//            echo $data['question_id'];
-//            echo '<br/>';
-//            break;
-//        case 3:
-//            echo '您删除了选项：';
-//            echo $data['option_id'];
-//            echo '<br/>';
-//            break;
-//    }
-//});
-$arr = $obj->toArray();
-print_r($arr);
+    /**
+     * @author ShiO
+     */
+    public function getRange() {
+    }
+}
+class SystemRequest{
+    /**
+     * @author ShiO
+     * @param $name
+     * @return mixed
+     */
+    public function getRequest($name) {
+        return $_REQUEST[$name];
+    }
 
+}
