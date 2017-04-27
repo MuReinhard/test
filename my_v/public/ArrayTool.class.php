@@ -12,6 +12,8 @@
  * keepArrayKeyValueToString 保留指定键的数组数据，并转化为指定标记分割的字符串
  * iArrayColumn array_column函数的低版本兼容函数
  * arrayDiffAssoc2DArr array_diff的二维数组版本
+ * mergeArrByKey 根据下标名合并数组
+ * search2DArrByValue 根据值搜索二维数组
  */
 class ArrayTool {
     /**
