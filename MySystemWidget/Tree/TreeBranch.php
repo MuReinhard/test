@@ -1,4 +1,5 @@
 <?php
+
 namespace Tree;
 
 use Closure;
@@ -50,6 +51,10 @@ class TreeBranch implements TreeBranchInf {
     public function toArray($child = '_child') {
         $temp = array();
         $data = $this->data;
+        if (is_object($data)) {
+            // 尝试取得对象对toArray方法
+            $data = $data->toArray();
+        }
         if ($this->childs) {
             foreach ($this->childs as $item) {
                 $temp[] = $item->toArray($child);
@@ -110,9 +115,27 @@ class TreeBranch implements TreeBranchInf {
      * @return mixed
      */
     public function each(Closure $eachFun) {
-        foreach ($this->childs as $item) {
-            call_user_func($eachFun, $item);
+        call_user_func($eachFun, $this);
+        if ($this->childs) {
+            foreach ($this->childs as $item) {
+                $item->each($eachFun);
+            }
         }
+        return $this;
+    }
+
+    /**
+     * @author ShiO
+     * @param Closure $eachFun
+     * @return $this
+     */
+    public function eachChild(Closure $eachFun) {
+        if ($this->childs) {
+            foreach ($this->childs as $item) {
+                call_user_func($eachFun, $item);
+            }
+        }
+        return $this;
     }
 
     /**
@@ -133,7 +156,7 @@ class TreeBranch implements TreeBranchInf {
     /**
      * @author ShiO
      * @param Closure $selectorFun
-     * @return $this
+     * @return mixed
      */
     public function findBySelector(Closure $selectorFun) {
         // 查看自己符不符合规则
