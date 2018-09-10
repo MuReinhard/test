@@ -15,7 +15,8 @@
  * mergeArrByKey 根据下标名合并数组
  * search2DArrByValue 根据值搜索二维数组
  */
-class ArrayTool {
+class ArrayTool
+{
     /**
      * +----------------------------------------------------------
      * 在数据列表中搜索
@@ -29,9 +30,10 @@ class ArrayTool {
      * +----------------------------------------------------------
      *
      * @return array
-    +----------------------------------------------------------
+     * +----------------------------------------------------------
      */
-    static function list_search($list, $condition) {
+    static function list_search($list, $condition)
+    {
         if (is_string($condition)) {
             parse_str($condition, $condition);
         }
@@ -64,7 +66,8 @@ class ArrayTool {
      *
      * @return mixed
      */
-    static function unique_arr($array2D, $stkeep = false, $ndformat = true) {
+    static function unique_arr($array2D, $stkeep = false, $ndformat = true)
+    {
         // 判断是否保留一级数组键 (一级数组键可以为非数字)
         if ($stkeep) {
             $stArr = array_keys($array2D);
@@ -110,7 +113,8 @@ class ArrayTool {
      *
      * @return array
      */
-    public static function unique_arr_top_data($_array, $_key, $_top) {
+    public static function unique_arr_top_data($_array, $_key, $_top)
+    {
         $arr = array();
         foreach ($_array as $k => $v) {
             if (self::topN($v[$_key], $_top)) {
@@ -127,7 +131,8 @@ class ArrayTool {
      *
      * @return bool
      */
-    private static function topN($uid, $top) {
+    private static function topN($uid, $top)
+    {
         global $_user;
         $_user[$uid]['cnt'] = $_user[$uid]['cnt'] + 1;
         if ($_user[$uid]['cnt'] > $top) {
@@ -145,7 +150,8 @@ class ArrayTool {
      * @param bool $ifKeepIndexTo3D
      * @return array
      */
-    public static function arrayGroupByKey($arr, $groupKey, $ifKeepIndexTo3D = false) {
+    public static function arrayGroupByKey($arr, $groupKey, $ifKeepIndexTo3D = false)
+    {
         $return = array();
         foreach ($arr as $key => $value) {
             if ($ifKeepIndexTo3D) {
@@ -164,7 +170,8 @@ class ArrayTool {
      * @param int $sortType
      * @return array|bool
      */
-    public static function sort2DArrByKey($arr2D, $sortKey, $sortType = SORT_ASC) {
+    public static function sort2DArrByKey($arr2D, $sortKey, $sortType = SORT_ASC)
+    {
         if (is_array($arr2D)) {
             foreach ($arr2D as $row_array) {
                 if (is_array($row_array)) {
@@ -187,12 +194,16 @@ class ArrayTool {
      * @param array $arr2D 源数组（二维数组）
      * @param string $key 要保存的key
      * @param string $mark 分割标记
-     * @return string 转化后的字符串
+     * @return string|array 转化后的字符串
      */
-    static function keepArrayKeyValueToString($arr2D, $key, $mark = ',') {
+    static function keepArrayKeyValueToString($arr2D, $key, $mark = ',')
+    {
         $newArr = array();
         for ($i = 0, $max = count($arr2D); $i < $max; $i++) {
             $newArr[] = $arr2D[$i][$key];
+        }
+        if ($mark == false) {
+            return $newArr;
         }
         return implode($mark, $newArr);
     }
@@ -206,17 +217,72 @@ class ArrayTool {
      * @param $array2
      * @return array
      */
-    static function arrayDiffAssoc2DArr($array1, $array2) {
+    static function arrayDiffAssoc2DArr($array1, $array2)
+    {
         $ret = array();
         foreach ($array1 as $k => $v) {
             if (!isset($array2[$k])) $ret[$k] = $v;
-            else if (is_array($v) && is_array($array2[$k])) $ret[$k] = array_diff_assoc2_deep($v, $array2[$k]);
+            else if (is_array($v) && is_array($array2[$k])) $ret[$k] = self::arrayDiffAssoc2DArr($v, $array2[$k]);
             else if ($v != $array2[$k]) $ret[$k] = $v;
             else {
                 unset($array1[$k]);
             }
         }
         return $ret;
+    }
+
+    /**
+     * @param $array1
+     * @param $array2
+     * @return array
+     */
+    static public function arrayDifference($array1, $array2)
+    {
+        $result = array();
+        foreach ($array1 as $a1) {
+            if (!in_array($a1, $array2)) {
+                array_push($result, $a1);
+            }
+        }
+        return $result;
+    }
+
+    /**
+     * @param $array1
+     * @param $array2
+     * @param Closure $diffFunc
+     * @return array
+     */
+    static public function arrayUDifference($array1, $array2, Closure $diffFunc)
+    {
+        foreach ($array1 as $key => $val) {
+            foreach ($array2 as $a2) {
+                if ($diffFunc($val, $a2)) {
+                    unset($array1[$key]);
+                }
+            }
+        }
+
+        return $array1;
+    }
+
+    /**
+     * @param $array1
+     * @param $array2
+     * @param Closure $diffFunc
+     * @return array
+     */
+    static public function arrayUIntersect($array1, $array2, Closure $diffFunc)
+    {
+        $result = [];
+        foreach ($array1 as $a1) {
+            foreach ($array2 as $a2) {
+                if ($diffFunc($a1, $a2)) {
+                    array_push($result, $a1);
+                }
+            }
+        }
+        return $result;
     }
 
     /**
@@ -228,7 +294,8 @@ class ArrayTool {
      * @param null $indexKey 索引键名
      * @return array 处理后的数组
      */
-    static function iArrayColumn($input, $columnKey, $indexKey = null) {
+    static function iArrayColumn($input, $columnKey, $indexKey = null)
+    {
         if (!function_exists('array_column')) {
             $columnKeyIsNumber = (is_numeric($columnKey)) ? true : false;
             $indexKeyIsNull = (is_null($indexKey)) ? true : false;
@@ -270,7 +337,8 @@ class ArrayTool {
      * @param null $coverKeepKey 要保留的键
      * @return mixed
      */
-    public static function mergeArrByKey($originArr, $newArr, $key, $isCoverAll = false, $keepNewKey = null, $isMultiKeep = false, $coverKeepKey = null) {
+    public static function mergeArrByKey($originArr, $newArr, $key, $isCoverAll = false, $keepNewKey = null, $isMultiKeep = false, $coverKeepKey = null)
+    {
         foreach ($newArr as $newKey => $newValue) {
             $position = key(self::search2DArrByValue($originArr, $newValue[$key], $key));
             if ($isCoverAll) {
@@ -307,17 +375,63 @@ class ArrayTool {
      * @param int $type 搜索结果类型（1 命中的数组，带层级，2 命中的数组，不带层级）
      * @return array|mixed
      */
-    static function search2DArrByValue($arr, $searchValue, $eqKey, $type = 1) {
+    static function search2DArrByValue($arr, $searchValue, $eqKey, $type = 1)
+    {
         $searchArr = array_filter($arr, function ($t) use ($searchValue, $eqKey) {
             return $t[$eqKey] == $searchValue;
         });
-
-        if ($type == 1) {
-            return $searchArr;
-        }
-
-        if ($type == 2) {
-            return current($searchArr);
+        switch ($type) {
+            case 1:
+                return $searchArr;
+                break;
+            case 2:
+                return current($searchArr);
+                break;
+            case 3:
+                return key($searchArr);
+                break;
         }
     }
+
+    /**
+     * @author ShiO Gong
+     * @param $array
+     * @param Closure $func
+     * @return array
+     */
+    static function duplicate2DArr($array, Closure $func)
+    {
+        $result = [];
+        foreach ($array as $key => $value) {
+            $has = false;
+            foreach ($result as $val) {
+                if ($func($value, $val)) {
+                    $has = true;
+                    break;
+                }
+            }
+            if (!$has) {
+                $result[] = $value;
+            }
+        }
+        return $result;
+    }
+
+    /**
+     * @author ShiO Gong
+     * @param $arr
+     * @param Closure $func
+     * @return bool
+     */
+    public static function exist2DArr($arr, Closure $func)
+    {
+        $flag = false;
+        foreach ($arr as $value) {
+            if ($func($value)) {
+                return $flag;
+            }
+        }
+        return $flag;
+    }
 }
+
