@@ -78,6 +78,7 @@ class FileTool {
      * @author ShiO
      * @param $data
      * @return $this
+     * @throws Exception
      */
     public function writer($data) {
         $class = new FilePermission();
@@ -101,6 +102,7 @@ class FileTool {
      * 创造文件
      * @param $data
      * @return FileTool
+     * @throws Exception
      */
     public function create($data = null) {
         $class = new FilePermission();
